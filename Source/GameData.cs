@@ -40,10 +40,12 @@ namespace MQTTClient
         public readonly List<string> Genres;
 
         public readonly double Hue;
-        
+
         public readonly double Saturation;
 
         public readonly double Brightness;
+
+        public readonly int[] RGB;
 
         public readonly double PlaytimeHours;
 
@@ -54,6 +56,10 @@ namespace MQTTClient
         public readonly DateTime? Modified;
 
         public readonly string CompletionStatus;
+
+        public readonly DateTime? ReleaseDate;
+
+        public readonly int? ReleaseYear;
 
         public GameData(Game game, Color color)
         {
@@ -74,11 +80,15 @@ namespace MQTTClient
             Hue = Math.Round(hsl.H * 100.0) / 100.0;
             Saturation = Math.Round(hsl.S * 100.0) / 100.0;
             Brightness = Math.Round(hsl.L * 100.0) / 100.0;
-            PlaytimeHours = Math.Round(game.Playtime / 3600.0, 2);
+            int[] rgb = { color.R, color.G, color.B };
+            RGB = rgb;
+            PlaytimeHours = Math.Round(game.Playtime / 3600.0, 1);
             LastPlayed = game.LastActivity;
             Added = game.Added;
             Modified = game.Modified;
             CompletionStatus = game.CompletionStatus?.Name;
+            ReleaseDate = game.ReleaseDate?.Date;
+            ReleaseYear = game.ReleaseYear;
         }
     }
 }
